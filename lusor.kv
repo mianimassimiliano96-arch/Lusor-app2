@@ -1,0 +1,329 @@
+<HomeScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(10)
+        padding: dp(15)
+
+        Label:
+            text: "Lusor"
+            font_size: dp(28)
+            bold: True
+            size_hint_y: None
+            height: dp(40)
+
+        Label:
+            text: "L'ingegneria del relamping"
+            font_size: dp(14)
+            color: (0.4, 0.4, 0.4, 1)
+            size_hint_y: None
+            height: dp(22)
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: dp(8)
+            size_hint_y: None
+            height: dp(120)
+
+            Label:
+                text: "Dati Edificio"
+                font_size: dp(16)
+                bold: True
+                size_hint_y: None
+                height: dp(25)
+
+            TextInput:
+                id: nome_input
+                hint_text: "Nome edificio"
+                multiline: False
+                size_hint_y: None
+                height: dp(36)
+
+            TextInput:
+                id: indirizzo_input
+                hint_text: "Indirizzo"
+                multiline: False
+                size_hint_y: None
+                height: dp(36)
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: dp(12)
+            padding: [0, dp(30), 0, 0]
+
+            Button:
+                text: "Gestione Stanze"
+                font_size: dp(16)
+                size_hint_y: None
+                height: dp(48)
+                background_color: (0.18, 0.33, 0.59, 1)
+                on_press: root.apri_stanze()
+
+            Button:
+                text: "Esporta risultati"
+                font_size: dp(16)
+                size_hint_y: None
+                height: dp(48)
+                background_color: (0.12, 0.56, 0.22, 1)
+                on_press: root.apri_export()
+
+        Label:
+            text: "(c) 2026 LUSOR"
+            font_size: dp(11)
+            color: (0.6, 0.6, 0.6, 1)
+            size_hint_y: None
+            height: dp(20)
+
+
+<RoomListScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(5)
+        padding: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(44)
+            spacing: dp(10)
+
+            Button:
+                text: "< Indietro"
+                size_hint_x: 0.3
+                on_press: root.manager.current = "home"
+
+            Label:
+                text: "Stanze"
+                font_size: dp(20)
+                bold: True
+                size_hint_x: 0.4
+
+            Button:
+                text: "+ Nuova"
+                size_hint_x: 0.3
+                background_color: (0.18, 0.33, 0.59, 1)
+                on_press: root._nuova()
+
+        ScrollView:
+            GridLayout:
+                id: lista
+                cols: 1
+                spacing: dp(6)
+                padding: [0, dp(5), 0, dp(5)]
+                size_hint_y: None
+                height: self.minimum_height
+
+
+<RoomDetailScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(5)
+        padding: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(44)
+            spacing: dp(10)
+
+            Button:
+                text: "< Stanze"
+                size_hint_x: 0.3
+                on_press: root.manager.current = "stanze"
+
+            Label:
+                text: "Dettaglio Stanza"
+                font_size: dp(18)
+                bold: True
+                size_hint_x: 0.4
+
+            Button:
+                text: "Salva"
+                size_hint_x: 0.3
+                background_color: (0.12, 0.56, 0.22, 1)
+                on_press: root._salva()
+
+        ScrollView:
+            BoxLayout:
+                orientation: "vertical"
+                spacing: dp(4)
+                size_hint_y: None
+                height: self.minimum_height
+                padding: [0, 0, 0, dp(20)]
+
+                Label:
+                    text: "Dati stanza"
+                    font_size: dp(14)
+                    bold: True
+                    size_hint_y: None
+                    height: dp(26)
+
+                # --- ID Locale ---
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: dp(42)
+                    Label:
+                        text: "ID Locale:"
+                        size_hint_x: 0.35
+                    TextInput:
+                        id: id_locale
+                        multiline: False
+                        size_hint_x: 0.65
+
+                # --- Piano ---
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: dp(42)
+                    Label:
+                        text: "Piano:"
+                        size_hint_x: 0.35
+                    Spinner:
+                        id: piano
+                        size_hint_x: 0.65
+                        values: ["Terra", "Primo", "Secondo", "Terzo", "Quarto", "Seminterrato", "Sottotetto", "Altro"]
+
+                # --- Altezza ---
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: dp(42)
+                    Label:
+                        text: "Altezza (m):"
+                        size_hint_x: 0.35
+                    TextInput:
+                        id: altezza
+                        text: "3.0"
+                        multiline: False
+                        input_filter: "float"
+                        size_hint_x: 0.65
+
+                # --- Destinazione ---
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: dp(42)
+                    Label:
+                        text: "Destinazione:"
+                        size_hint_x: 0.35
+                    Spinner:
+                        id: destinazione
+                        size_hint_x: 0.65
+                        values: ["Ufficio", "Aula/Corsi", "Corridoio", "Magazzino", "Bagno", "Sala riunioni", "Reception", "Cucina", "Altro"]
+
+                # --- Controsoffitto ---
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: dp(42)
+                    Label:
+                        text: "Controsoffitto:"
+                        size_hint_x: 0.35
+                    Spinner:
+                        id: ct
+                        size_hint_x: 0.65
+                        values: ["Cartongesso", "Grigliato metallico", "Lamellare", "Pannelli fonoassorbenti", "Doghe in legno", "PVC", "Nessuno / A vista", "Altro"]
+
+                Label:
+                    text: "Apparecchi illuminanti"
+                    font_size: dp(14)
+                    bold: True
+                    size_hint_y: None
+                    height: dp(26)
+
+                GridLayout:
+                    id: app_list
+                    cols: 1
+                    spacing: dp(3)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                Button:
+                    text: "+ Aggiungi apparecchio"
+                    size_hint_y: None
+                    height: dp(40)
+                    background_color: (0.3, 0.6, 0.3, 1)
+                    on_press: root._agg_apparecchio()
+
+                Label:
+                    text: "Foto"
+                    font_size: dp(14)
+                    bold: True
+                    size_hint_y: None
+                    height: dp(26)
+
+                GridLayout:
+                    id: foto_list
+                    cols: 1
+                    spacing: dp(3)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: dp(44)
+
+                    Button:
+                        text: "Scatta foto"
+                        on_press: root._scatta_foto()
+
+                    Button:
+                        text: "Sfoglia..."
+                        on_press: root._aggiungi_foto()
+
+
+<ExportScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(10)
+        padding: dp(15)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(44)
+            spacing: dp(10)
+
+            Button:
+                text: "< Home"
+                size_hint_x: 0.3
+                on_press: root.manager.current = "home"
+
+            Label:
+                text: "Esporta risultati"
+                font_size: dp(20)
+                bold: True
+                size_hint_x: 0.4
+
+        Label:
+            id: info
+            text: ""
+            font_size: dp(14)
+            size_hint_y: None
+            height: dp(80)
+            halign: "center"
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: dp(20)
+            padding: [dp(20), dp(20), dp(20), dp(20)]
+
+            Button:
+                text: "Esporta Excel + Foto ZIP"
+                font_size: dp(16)
+                size_hint_y: None
+                height: dp(54)
+                background_color: (0.12, 0.56, 0.22, 1)
+                on_press: root._esporta_excel()
+
+            Button:
+                text: "Salva progetto (.lsr)"
+                font_size: dp(16)
+                size_hint_y: None
+                height: dp(54)
+                background_color: (0.18, 0.33, 0.59, 1)
+                on_press: root._esporta_lsr()
